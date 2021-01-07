@@ -23,7 +23,7 @@ const sketch = () => {
   
   const rondomPointSelector = (arr) => {
     const randomizedPoints = [];
-    const tempArr = random.shuffle(arr);
+    const tempArr = random.shuffle(arr.filter(([ x, y ]) => y !== 1));
 
     for (let x = 0; x < arr.length / 2; x++) {
       randomizedPoints.push([ tempArr.shift(), tempArr.pop()])
