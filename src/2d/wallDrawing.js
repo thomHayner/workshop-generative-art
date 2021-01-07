@@ -49,7 +49,7 @@ const sketch = () => {
       const y = v * (height - (width / gridSize)) + ((width / gridSize) * 0.5);
 
       context.beginPath();
-      context.arc(x, y, 10, 0, Math.PI * 2, false);
+      context.arc(x, y, 1, 0, Math.PI * 2, false);
       context.fillStyle = "black";
       context.fill()
     })
