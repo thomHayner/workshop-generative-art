@@ -69,6 +69,7 @@ const sketch = () => {
       context.lineTo(x1, width - ((width / gridSize) * 0.5));
       context.fillStyle = random.pick(random.pick(palettes))
       context.fill();
+      context.strokeStyle = "white";
       context.stroke();
     })
   }
