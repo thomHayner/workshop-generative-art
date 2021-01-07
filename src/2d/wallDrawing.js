@@ -67,9 +67,9 @@ const sketch = () => {
       context.lineTo(x2, y2);
       context.lineTo(x2, width - ((width / gridSize) * 0.5));
       context.lineTo(x1, width - ((width / gridSize) * 0.5));
-      context.stroke();
       context.fillStyle = random.pick(random.pick(palettes))
       context.fill();
+      context.stroke();
     })
   }
 };
