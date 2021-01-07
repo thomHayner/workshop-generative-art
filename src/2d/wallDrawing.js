@@ -36,12 +36,13 @@ const sketch = () => {
   const gridSize = 6;
   const points = gridBuilder();
   const randomizedPoints = rondomPointSelector(points);
-  const color = random.pick(random.pick(palettes));
+  const backgroundColor = "white"
+  // const color = random.pick(random.pick(palettes));
 
   console.log(randomizedPoints)
 
   return ({ context, width, height }) => {
-    context.fillStyle = 'white';
+    context.fillStyle = backgroundColor;
     context.fillRect(0, 0, width, height);
 
     points.forEach(([ u, v ]) => {
@@ -61,7 +62,7 @@ const sketch = () => {
       const y2 = v * (height - (width / gridSize)) + ((width / gridSize) * 0.5);
 
       context.beginPath();
-      context.lineWidth = 5;
+      context.lineWidth = 1;
       context.moveTo(x1, (width / gridSize) * 0.5);
       context.lineTo(x1, y1);
       context.lineTo(x2, y2);
@@ -69,7 +70,7 @@ const sketch = () => {
       context.lineTo(x1, width - ((width / gridSize) * 0.5));
       context.fillStyle = random.pick(random.pick(palettes))
       context.fill();
-      context.strokeStyle = "white";
+      context.strokeStyle = backgroundColor;
       context.stroke();
     })
   }
