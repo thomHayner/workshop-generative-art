@@ -19,7 +19,6 @@ const sketch = () => {
         innerPoints.push([ u, v ])
       }
     };
-
     return innerPoints
   }
   
@@ -32,22 +31,20 @@ const sketch = () => {
       
       if (first !== second) {
         innerRandomizedPoints.push([ tempArr.shift(), tempArr.shift()]);
-      } // else {
+      }
       if (first === second) {
         const newIndex = tempArr.findIndex(([ x, y ]) => y !== first)
         const newSecond = tempArr.splice(newIndex, newIndex + 1)
         innerRandomizedPoints.push([ tempArr.shift(), newSecond ])
       };
     };
-      // sort by avg y value
     return innerRandomizedPoints.sort((a, b) => ((a[0][1]+a[1][1]) / 2) - ((b[0][1]+b[1][1]) / 2))
   }
     
   const gridSize = 6;
   const points = gridBuilder();
   const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
-  // const randomizedPoints = rondomPointSelector().sort(([ [ o, p ], [ q, r ] ], [ [ s, t ], [ u, v ] ]) => (p+r) / 2 < (t + v) / 2);
-  const randomizedPoints = rondomPointSelector()//.sort((a, b) => (a[0][1]+a[1][1]) / 2 < (b[0][1]+b[1][1]) / 2);
+  const randomizedPoints = rondomPointSelector();
   const backgroundColor = "white";
   
   console.log(randomizedPoints)
