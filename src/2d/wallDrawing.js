@@ -22,33 +22,46 @@ const sketch = () => {
     return innerPoints
   }
   
-  const rondomPointSelector = (arr) => {
+  const rondomPointSelector = () => {
     const innerRandomizedPoints = [];
-    const max = arr.length / 2
+    const max = tempArr.length / 2
+    const arrClone = [...tempArr] 
     
-    for (let x = 0; x < max; x++) {
-      const first = arr[0][1];
-      const second = arr[1][1];
+    // if (!arrClone) {setTimeout(()=> {if (innerRandomizedPoints.length !== max) {
+    //   }
+    // }, 1000)}
+    
+    for (let x = 0; x < max; x += 2) {
+      const first = arrClone[0][1];
+      const second = arrClone[1][1];
       
       if (first !== second) {
-        innerRandomizedPoints.push([ arr.shift(), arr.shift()]);
+        innerRandomizedPoints.push([ arrClone.shift(), arrClone.shift()]);
+        x -= 1
       }
       if (first === second) {
-        const newIndex = arr.findIndex((a) => a[1] !== first) || 1 ;
-        const newSecond = arr.splice(newIndex, newIndex + 1)
-        innerRandomizedPoints.push([ arr.shift(), newSecond ])
+        const newIndex = arrClone.findIndex((a) => a[1] !== first) || 1 ;
+        const newSecond = arrClone.splice(newIndex, newIndex + 1);
+        innerRandomizedPoints.push([ arrClone.shift(), newSecond ]);
       };
     };
+    
+    // return randomPointSelector(tempArr)
+    // if (innerRandomizedPoints.length !== max) {
+    //   return randomPointSelector(tempArr)
+    // }
+    console.log('arrClone')
+    console.log(arrClone)
     return innerRandomizedPoints.sort((a, b) => ((a[0][1]+a[1][1]) / 2) - ((b[0][1]+b[1][1]) / 2))
   }
-    
+  
   const gridSize = 6;
   const points = gridBuilder();
   // const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
   const tempArr = random.shuffle(points.filter((a) => a[1] !== 1));
   console.log("tempArr Pre")
   console.log(tempArr)
-  const sortedRandomizedPoints = rondomPointSelector(tempArr);
+  const sortedRandomizedPoints = rondomPointSelector();
   const backgroundColor = "white";
   console.log("tempArr Post")
   console.log(tempArr)
@@ -76,7 +89,7 @@ const sketch = () => {
       const y2 = v * (height - (width / gridSize)) + ((width / gridSize) * 0.5);
 
       context.beginPath();
-      context.lineWidth = 5;
+      context.lineWidth = 10;
       context.moveTo(x1, (width / gridSize) * 0.5);
       context.lineTo(x1, y1);
       context.lineTo(x2, y2);
