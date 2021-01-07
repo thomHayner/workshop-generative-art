@@ -40,13 +40,14 @@ const sketch = () => {
       };
     };
       // sort by avg y value
-    return innerRandomizedPoints
+    return innerRandomizedPoints.sort((a, b) => ((a[0][1]+a[1][1]) / 2) - ((b[0][1]+b[1][1]) / 2))
   }
     
   const gridSize = 6;
   const points = gridBuilder();
   const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
-  const randomizedPoints = rondomPointSelector();
+  // const randomizedPoints = rondomPointSelector().sort(([ [ o, p ], [ q, r ] ], [ [ s, t ], [ u, v ] ]) => (p+r) / 2 < (t + v) / 2);
+  const randomizedPoints = rondomPointSelector()//.sort((a, b) => (a[0][1]+a[1][1]) / 2 < (b[0][1]+b[1][1]) / 2);
   const backgroundColor = "white";
   
   console.log(randomizedPoints)
@@ -72,7 +73,7 @@ const sketch = () => {
       const y2 = v * (height - (width / gridSize)) + ((width / gridSize) * 0.5);
 
       context.beginPath();
-      context.lineWidth = 1;
+      context.lineWidth = 5;
       context.moveTo(x1, (width / gridSize) * 0.5);
       context.lineTo(x1, y1);
       context.lineTo(x2, y2);
