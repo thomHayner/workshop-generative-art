@@ -22,20 +22,21 @@ const sketch = () => {
     return innerPoints
   }
   
-  const rondomPointSelector = () => {
+  const rondomPointSelector = (arr) => {
     const innerRandomizedPoints = [];
+    const max = arr.length / 2
     
-    for (let x = 0; x < tempArr.length / 2; x++) {
-      const first = tempArr[0][1];
-      const second = tempArr[1][1];
+    for (let x = 0; x < max; x++) {
+      const first = arr[0][1];
+      const second = arr[1][1];
       
       if (first !== second) {
-        innerRandomizedPoints.push([ tempArr.shift(), tempArr.shift()]);
+        innerRandomizedPoints.push([ arr.shift(), arr.shift()]);
       }
       if (first === second) {
-        const newIndex = tempArr.findIndex(([ x, y ]) => y !== first)
-        const newSecond = tempArr.splice(newIndex, newIndex + 1)
-        innerRandomizedPoints.push([ tempArr.shift(), newSecond ])
+        const newIndex = arr.findIndex((a) => a[1] !== first) || 1 ;
+        const newSecond = arr.splice(newIndex, newIndex + 1)
+        innerRandomizedPoints.push([ arr.shift(), newSecond ])
       };
     };
     return innerRandomizedPoints.sort((a, b) => ((a[0][1]+a[1][1]) / 2) - ((b[0][1]+b[1][1]) / 2))
@@ -43,11 +44,16 @@ const sketch = () => {
     
   const gridSize = 6;
   const points = gridBuilder();
-  const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
-  const randomizedPoints = rondomPointSelector();
+  // const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
+  const tempArr = random.shuffle(points.filter((a) => a[1] !== 1));
+  console.log("tempArr Pre")
+  console.log(tempArr)
+  const sortedRandomizedPoints = rondomPointSelector(tempArr);
   const backgroundColor = "white";
-  
-  console.log(randomizedPoints)
+  console.log("tempArr Post")
+  console.log(tempArr)
+  console.log("sortedRandomizedPoints")
+  console.log(sortedRandomizedPoints)
 
   return ({ context, width, height }) => {
     context.fillStyle = backgroundColor;
@@ -63,7 +69,7 @@ const sketch = () => {
       context.fill()
     })
 
-    randomizedPoints.forEach(([[ s, t ], [ u, v ]]) => {
+    sortedRandomizedPoints.forEach(([[ s, t ], [ u, v ]]) => {
       const x1 = s * (width - (width / gridSize)) + ((width / gridSize) * 0.5);
       const y1 = t * (height - (width / gridSize)) + ((width / gridSize) * 0.5);
       const x2 = u * (width - (width / gridSize)) + ((width / gridSize) * 0.5);
