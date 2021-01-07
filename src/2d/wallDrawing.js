@@ -1,5 +1,7 @@
 const canvasSketch = require('canvas-sketch');
-const random = require('canvas-sketch-util/random')
+const random = require('canvas-sketch-util/random');
+const palettes = require('nice-color-palettes');
+
 
 const settings = {
   dimensions: [ 2048, 2048 ]
@@ -34,6 +36,7 @@ const sketch = () => {
   const gridSize = 6
   const points = gridBuilder();
   const randomizedPoints = rondomPointSelector(points)
+  const color = random.pick(random.pick(palettes));
 
   console.log(randomizedPoints)
 
@@ -65,8 +68,8 @@ const sketch = () => {
       context.lineTo(x2, width - ((width / gridSize) * 0.5));
       context.lineTo(x1, width - ((width / gridSize) * 0.5));
       context.stroke();
-      context.fillStyle = "green"
-      context.fill()
+      context.fillStyle = random.pick(random.pick(palettes))
+      context.fill();
     })
   }
 };
