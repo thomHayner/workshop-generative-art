@@ -65,6 +65,8 @@ const sketch = () => {
       context.lineTo(x2, width - ((width / gridSize) * 0.5));
       context.lineTo(x1, width - ((width / gridSize) * 0.5));
       context.stroke();
+      context.fillStyle = "green"
+      context.fill()
     })
   }
 };
