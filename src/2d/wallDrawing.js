@@ -10,35 +10,45 @@ const settings = {
 const sketch = () => {
   
   const gridBuilder = () => {
-    const points = [];
+    const innerPoints = [];
     
     for (let x = 0; x < gridSize; x++) {
       for (let y = 0; y < gridSize; y++) {
         const u = (x / (gridSize - 1));
         const v = y / (gridSize - 1);
-        points.push([ u, v ])
+        innerPoints.push([ u, v ])
       }
     };
 
-    return points
+    return innerPoints
   }
   
-  const rondomPointSelector = (arr) => {
-    const randomizedPoints = [];
-    const tempArr = random.shuffle(arr.filter(([ x, y ]) => y !== 1));
-
-    for (let x = 0; x < arr.length / 2; x++) {
-      randomizedPoints.push([ tempArr.shift(), tempArr.pop()])
+  const rondomPointSelector = () => {
+    const innerRandomizedPoints = [];
+    
+    for (let x = 0; x < tempArr.length / 2; x++) {
+      const first = tempArr[0][1];
+      const second = tempArr[1][1];
+      
+      if (first !== second) {
+        innerRandomizedPoints.push([ tempArr.shift(), tempArr.shift()]);
+      } // else {
+      if (first === second) {
+        const newIndex = tempArr.findIndex(([ x, y ]) => y !== first)
+        const newSecond = tempArr.splice(newIndex, newIndex + 1)
+        innerRandomizedPoints.push([ tempArr.shift(), newSecond ])
+      };
     };
-    return randomizedPoints
+      // sort by avg y value
+    return innerRandomizedPoints
   }
-  
+    
   const gridSize = 6;
   const points = gridBuilder();
-  const randomizedPoints = rondomPointSelector(points);
-  const backgroundColor = "white"
-  // const color = random.pick(random.pick(palettes));
-
+  const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
+  const randomizedPoints = rondomPointSelector();
+  const backgroundColor = "white";
+  
   console.log(randomizedPoints)
 
   return ({ context, width, height }) => {
