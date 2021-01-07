@@ -29,13 +29,13 @@ const sketch = () => {
 
     for (let x = 0; x < arr.length / 2; x++) {
       randomizedPoints.push([ tempArr.shift(), tempArr.pop()])
-    }
+    };
     return randomizedPoints
   }
   
-  const gridSize = 6
+  const gridSize = 6;
   const points = gridBuilder();
-  const randomizedPoints = rondomPointSelector(points)
+  const randomizedPoints = rondomPointSelector(points);
   const color = random.pick(random.pick(palettes));
 
   console.log(randomizedPoints)
