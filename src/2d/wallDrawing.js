@@ -59,10 +59,13 @@ const sketch = () => {
   const points = gridBuilder();
   // const tempArr = random.shuffle(points.filter(([ x, y ]) => y !== 1));
   const tempArr = random.shuffle(points.filter((a) => a[1] !== 1));
+
   console.log("tempArr Pre")
   console.log(tempArr)
+
   const sortedRandomizedPoints = rondomPointSelector();
   const backgroundColor = "white";
+  
   console.log("tempArr Post")
   console.log(tempArr)
   console.log("sortedRandomizedPoints")
