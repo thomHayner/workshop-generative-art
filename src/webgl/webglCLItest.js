@@ -12,7 +12,7 @@ const settings = {
   // Make the loop animated
   animate: true,
   // Get a WebGL canvas rather than 2D
-  context: "webgl"
+  context: "webgl",
 };
 
 const sketch = ({ context }) => {
@@ -23,7 +23,7 @@ const sketch = ({ context }) => {
   });
   
   // WebGL background color
-  renderer.setClearColor("#000", 1);
+  renderer.setClearColor("#fff", 1);
   
   // Setup a camera
   const camera = new THREE.OrthographicCamera();
@@ -83,8 +83,11 @@ const sketch = ({ context }) => {
     scene.add(cube) // adds the 'cube' object to the scene
   };
 
-  const light = new THREE.DirectionalLight("red", 1);
-  scene.add(light);
+  scene.add(new THREE.AmbientLight('hsl( 0, 0%, 40% )')); // adds an extra light that can highlight dark areas
+
+  const light = new THREE.DirectionalLight("white", 1);
+  light.position.set(2, 1.5, 1); // sets position of the light, effects shading on each side
+  scene.add(light); // adds 'light' to scene
 
   // draw each frame
   return {
