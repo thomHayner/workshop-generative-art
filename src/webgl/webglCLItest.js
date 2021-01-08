@@ -64,7 +64,7 @@ const sketch = ({ context }) => {
   // Boxes / Cubes may be set up inside a for loop
   for (let i = 0; i < 40; i++) {
     const cubeGeometry = new THREE.BoxGeometry();
-    const cubeMaterial = new THREE.MeshBasicMaterial({
+    const cubeMaterial = new THREE.MeshStandardMaterial({
       color: random.pick(palette),
       wireframe: false
     });
