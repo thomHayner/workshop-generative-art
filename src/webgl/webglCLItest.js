@@ -130,10 +130,13 @@ const sketch = ({ context }) => {
       // camera.updateProjectionMatrix(); // perspective camera settings
     },
     // Update & render your scene here
-    render({ time }) {
-      scene.rotation.x = time * 0.1;
-      scene.rotation.y = time * 0.15;
-      scene.rotation.z = time * 0.2;
+    render({ playhead }) { // { time } is normal, { playhead } is only for timed GIFs
+    scene.rotation.x = playhead * Math.PI * 2;
+    scene.rotation.y = playhead * Math.PI * 2;
+    scene.rotation.z = playhead * Math.PI * 2;
+    // scene.rotation.x = time * 0.1;
+      // scene.rotation.y = time * 0.15;
+      // scene.rotation.z = time * 0.2;
       controls.update();
       renderer.render(scene, camera);
     },
