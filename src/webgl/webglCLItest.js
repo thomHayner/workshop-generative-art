@@ -131,9 +131,9 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ playhead }) { // { time } is normal, { playhead } is only for timed GIFs
-    scene.rotation.x = playhead * Math.PI * 2;
-    scene.rotation.y = playhead * Math.PI * 2;
-    scene.rotation.z = playhead * Math.PI * 2;
+    // scene.rotation.x = playhead * Math.PI * 2;
+    // scene.rotation.y = playhead * Math.PI * 2;
+    scene.rotation.z = Math.sin(playhead * Math.PI * 2);
     // scene.rotation.x = time * 0.1;
       // scene.rotation.y = time * 0.15;
       // scene.rotation.z = time * 0.2;
