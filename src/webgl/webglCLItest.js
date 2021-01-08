@@ -47,7 +47,7 @@ const sketch = ({ context }) => {
   });
   const cubeMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ff00,
-    wireframe: true
+    wireframe: false
   });
   
   // Setup a mesh with geometry + material
@@ -67,8 +67,9 @@ const sketch = ({ context }) => {
   scene.add(mesh); // adds the 'mesh' object to the scene
 
   // for (let i = 0; i < 10; i++) {
-  //   const cube = new THREE>mesh (cubeGeometry, cubeMaterial );
-  //   scene.add( cube) 
+    const cube = new THREE.Mesh (cubeGeometry, cubeMaterial );
+    cube.scale.multiplyScalar(0.02); // changes size of object
+    scene.add(cube) 
   // };
 
   // draw each frame
@@ -100,8 +101,8 @@ const sketch = ({ context }) => {
       // Update the camera
       camera.updateProjectionMatrix();
 
-      // camera.aspect = viewportWidth / viewportHeight;
-      // camera.updateProjectionMatrix();
+      // camera.aspect = viewportWidth / viewportHeight; // perspective camera settings
+      // camera.updateProjectionMatrix(); // perspective camera settings
     },
     // Update & render your scene here
     render({ time }) {
