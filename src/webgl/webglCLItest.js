@@ -83,7 +83,8 @@ const sketch = ({ context }) => {
     scene.add(cube) // adds the 'cube' object to the scene
   };
 
-  
+  const light = new THREE.DirectionalLight("red", 1);
+  scene.add(light);
 
   // draw each frame
   return {
