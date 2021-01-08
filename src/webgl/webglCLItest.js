@@ -5,6 +5,7 @@ global.THREE = require("three");
 require("three/examples/js/controls/OrbitControls");
 
 const canvasSketch = require("canvas-sketch");
+const random = require("canvas-sketch-util/random");
 
 const settings = {
   // Make the loop animated
@@ -20,32 +21,55 @@ const sketch = ({ context }) => {
   });
 
   // WebGL background color
-  renderer.setClearColor("#fff", 1);
+  renderer.setClearColor("#000", 1);
 
   // Setup a camera
-  // const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
   const camera = new THREE.OrthographicCamera();
-  // camera.position.set(2, 2, -4);
-  // camera.lookAt(new THREE.Vector3());
+  // const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100); // perspective camera
+  // camera.position.set(2, 2, -4); // perspective camera settings
+  // camera.lookAt(new THREE.Vector3()); // perspective camera settings
 
   // Setup camera controller
   const controls = new THREE.OrbitControls(camera, context.canvas);
 
   // Setup your scene
   const scene = new THREE.Scene();
-
+  
+  
   // Setup a geometry
-  const geometry = new THREE.SphereGeometry(1, 32, 16);
-
+  const sphereGeometry = new THREE.SphereGeometry(1, 32, 16);
+  const cubeGeometry = new THREE.BoxGeometry();
+  
   // Setup a material
-  const material = new THREE.MeshBasicMaterial({
+  const sphereMaterial = new THREE.MeshBasicMaterial({
     color: "red",
     wireframe: true
   });
-
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x00ff00,
+    wireframe: true
+  });
+  
   // Setup a mesh with geometry + material
-  const mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
+  const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  mesh.position.set(
+    random.range(-.05, .05), // changes position on the x-axis direction
+    random.range(-.05, .05), // changes position on the y-axis direction
+    random.range(-.05, .05) // changes position on the z-axis direction
+    );
+  mesh.scale.set(
+    random.range(-.1, .1), // changes scale in x-axis direction
+    random.range(-.1, .1), // changes scale in y-axis direction
+    random.range(-.1, .1) // changes scale in z-axis direction
+  );  
+  mesh.scale.multiplyScalar(0.25); // changes size of object
+
+  scene.add(mesh); // adds the 'mesh' object to the scene
+
+  // for (let i = 0; i < 10; i++) {
+  //   const cube = new THREE>mesh (cubeGeometry, cubeMaterial );
+  //   scene.add( cube) 
+  // };
 
   // draw each frame
   return {
@@ -53,8 +77,31 @@ const sketch = ({ context }) => {
     resize({ pixelRatio, viewportWidth, viewportHeight }) {
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(viewportWidth, viewportHeight, false);
-      camera.aspect = viewportWidth / viewportHeight;
+
+      const aspect = viewportWidth / viewportHeight;
+
+      // Ortho zoom
+      const zoom = 0.1;
+
+      // Bounds
+      camera.left = -zoom * aspect;
+      camera.right = zoom * aspect;
+      camera.top = zoom;
+      camera.bottom = -zoom;
+
+      // Near/Far
+      camera.near = -100;
+      camera.far = 100;
+
+      // Set position & look at world center
+      camera.position.set(zoom, zoom, zoom);
+      camera.lookAt(new THREE.Vector3());
+
+      // Update the camera
       camera.updateProjectionMatrix();
+
+      // camera.aspect = viewportWidth / viewportHeight;
+      // camera.updateProjectionMatrix();
     },
     // Update & render your scene here
     render({ time }) {
