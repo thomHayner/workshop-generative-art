@@ -9,10 +9,18 @@ const random = require("canvas-sketch-util/random");
 const palettes = require("nice-color-palettes")
 
 const settings = {
+  // Set dimensions for the scene
+  dimensions: [ 512, 512 ],
+  // Set the frames per second for the animation
+  fps: 24,
+  // Set the animation duration
+  duration: 4,
   // Make the loop animated
   animate: true,
   // Get a WebGL canvas rather than 2D
   context: "webgl",
+  // Turn on MSAA
+  attributes: { antialiasing: true }
 };
 
 const sketch = ({ context }) => {
