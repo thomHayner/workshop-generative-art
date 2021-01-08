@@ -131,7 +131,9 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ time }) {
-      mesh.rotation.y = time * 0.1;
+      scene.rotation.x = time * 0.1;
+      scene.rotation.y = time * 0.15;
+      scene.rotation.z = time * 0.2;
       controls.update();
       renderer.render(scene, camera);
     },
