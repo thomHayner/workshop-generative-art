@@ -61,16 +61,26 @@ const sketch = ({ context }) => {
     random.range(-.1, .1), // changes scale in x-axis direction
     random.range(-.1, .1), // changes scale in y-axis direction
     random.range(-.1, .1) // changes scale in z-axis direction
-  );  
+  );
   mesh.scale.multiplyScalar(0.25); // changes size of object
 
   scene.add(mesh); // adds the 'mesh' object to the scene
 
-  // for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     const cube = new THREE.Mesh (cubeGeometry, cubeMaterial );
-    cube.scale.multiplyScalar(0.02); // changes size of object
+    cube.position.set(
+      random.range(-.05, .05), // changes position on the x-axis direction
+      random.range(-.05, .05), // changes position on the y-axis direction
+      random.range(-.05, .05) // changes position on the z-axis direction
+    );
+    cube.scale.set(
+      random.range(-.1, .1), // changes scale in x-axis direction
+      random.range(-.1, .1), // changes scale in y-axis direction
+      random.range(-.1, .1) // changes scale in z-axis direction
+    );  
+    cube.scale.multiplyScalar(0.25); // changes size of object
     scene.add(cube) 
-  // };
+  };
 
   // draw each frame
   return {
