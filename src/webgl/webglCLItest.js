@@ -20,12 +20,13 @@ const sketch = ({ context }) => {
   });
 
   // WebGL background color
-  renderer.setClearColor("#000", 1);
+  renderer.setClearColor("#fff", 1);
 
   // Setup a camera
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
-  camera.position.set(0, 0, -4);
-  camera.lookAt(new THREE.Vector3());
+  // const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
+  const camera = new THREE.OrthographicCamera();
+  // camera.position.set(2, 2, -4);
+  // camera.lookAt(new THREE.Vector3());
 
   // Setup camera controller
   const controls = new THREE.OrbitControls(camera, context.canvas);
@@ -57,6 +58,7 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ time }) {
+      mesh.rotation.y = time * 0.1;
       controls.update();
       renderer.render(scene, camera);
     },
