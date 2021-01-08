@@ -16,7 +16,7 @@ const settings = {
 };
 
 const sketch = ({ context }) => {
-  const palette = random.pick(palettes)
+  const palette = random.pick(palettes) // add a variable for a random color palette
   // Create a renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: context.canvas
@@ -37,39 +37,37 @@ const sketch = ({ context }) => {
   // Setup your scene
   const scene = new THREE.Scene();
   
-  
   // Setup a geometry
   const sphereGeometry = new THREE.SphereGeometry(1, 32, 16);
-  const cubeGeometry = new THREE.BoxGeometry();
   
   // Setup a material
   const sphereMaterial = new THREE.MeshBasicMaterial({
     color: "red",
     wireframe: true
   });
-  const cubeMaterial = new THREE.MeshBasicMaterial({
-    // color: 0x00ff00,
-    color: random.pick(palette),
-    wireframe: false
-  });
   
   // Setup a mesh with geometry + material
   const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  mesh.position.set(
-    random.range(-.05, .05), // changes position on the x-axis direction
-    random.range(-.05, .05), // changes position on the y-axis direction
-    random.range(-.05, .05) // changes position on the z-axis direction
-    );
-  mesh.scale.set(
-    random.range(-.1, .1), // changes scale in x-axis direction
-    random.range(-.1, .1), // changes scale in y-axis direction
-    random.range(-.1, .1) // changes scale in z-axis direction
-  );
-  mesh.scale.multiplyScalar(0.25); // changes size of object
-
-  scene.add(mesh); // adds the 'mesh' object to the scene
-
-  for (let i = 0; i < 10; i++) {
+  // mesh.position.set(
+  //   random.range(-.05, .05), // changes position on the x-axis direction
+  //   random.range(-.05, .05), // changes position on the y-axis direction
+  //   random.range(-.05, .05) // changes position on the z-axis direction
+  // );
+  // mesh.scale.set(
+  //   random.range(-.1, .1), // changes scale in x-axis direction
+  //   random.range(-.1, .1), // changes scale in y-axis direction
+  //   random.range(-.1, .1) // changes scale in z-axis direction
+  // );
+  // mesh.scale.multiplyScalar(0.01); // changes size of object
+  // scene.add(mesh); // adds the 'mesh' object to the scene
+      
+  // Boxes / Cubes may be set up inside a for loop
+  for (let i = 0; i < 40; i++) {
+    const cubeGeometry = new THREE.BoxGeometry();
+    const cubeMaterial = new THREE.MeshBasicMaterial({
+      color: random.pick(palette),
+      wireframe: false
+    });
     const cube = new THREE.Mesh (cubeGeometry, cubeMaterial );
     cube.position.set(
       random.range(-.05, .05), // changes position on the x-axis direction
@@ -82,9 +80,10 @@ const sketch = ({ context }) => {
       random.range(-.1, .1) // changes scale in z-axis direction
     );  
     cube.scale.multiplyScalar(0.25); // changes size of object
-    // cube.color.set({color: random.pick(palette)})
-    scene.add(cube) 
+    scene.add(cube) // adds the 'cube' object to the scene
   };
+
+  
 
   // draw each frame
   return {
