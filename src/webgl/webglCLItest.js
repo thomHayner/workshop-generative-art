@@ -8,6 +8,7 @@ const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
 const palettes = require("nice-color-palettes");
 const eases = require('eases');
+const BezierEasing = require('bezier-easing'); // www.cubic-bezier.com
 
 const settings = {
   // Set dimensions for the scene
@@ -89,7 +90,7 @@ const sketch = ({ context }) => {
       random.range(-.1, .1) // changes scale in z-axis direction
     );  
     cube.scale.multiplyScalar(0.25); // changes size of object
-    scene.add(cube) // adds the 'cube' object to the scene
+    scene.add(cube); // adds the 'cube' object to the scene
   };
 
   scene.add(new THREE.AmbientLight('hsl( 0, 0%, 40% )')); // adds an extra light that can highlight dark areas
@@ -97,6 +98,8 @@ const sketch = ({ context }) => {
   const light = new THREE.DirectionalLight("white", 1);
   light.position.set(2, 1.5, 1); // sets position of the light, effects shading on each side
   scene.add(light); // adds 'light' to scene
+
+  const easeFn = BezierEasing(.5,1.5,.5,-0.5);
 
   // draw each frame
   return {
@@ -136,7 +139,8 @@ const sketch = ({ context }) => {
     // scene.rotation.y = playhead * Math.PI * 2;
     // scene.rotation.z = playhead * Math.PI * 2;
     // scene.rotation.z = Math.sin(playhead * Math.PI * 2);
-    scene.rotation.z = eases.expoInOut(Math.sin(playhead * Math.PI * 2));
+    // scene.rotation.z = eases.expoInOut(Math.sin(playhead * Math.PI * 2));
+    scene.rotation.z = easeFn(Math.sin(playhead * Math.PI)) // cubic-bezier.com
     // scene.rotation.x = time * 0.1;
       // scene.rotation.y = time * 0.15;
       // scene.rotation.z = time * 0.2;
