@@ -6,6 +6,7 @@ require("three/examples/js/controls/OrbitControls");
 
 const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
+const palettes = require("nice-color-palettes")
 
 const settings = {
   // Make the loop animated
@@ -15,23 +16,24 @@ const settings = {
 };
 
 const sketch = ({ context }) => {
+  const palette = random.pick(palettes)
   // Create a renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: context.canvas
   });
-
+  
   // WebGL background color
   renderer.setClearColor("#000", 1);
-
+  
   // Setup a camera
   const camera = new THREE.OrthographicCamera();
   // const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100); // perspective camera
   // camera.position.set(2, 2, -4); // perspective camera settings
   // camera.lookAt(new THREE.Vector3()); // perspective camera settings
-
+  
   // Setup camera controller
   const controls = new THREE.OrbitControls(camera, context.canvas);
-
+  
   // Setup your scene
   const scene = new THREE.Scene();
   
@@ -46,7 +48,8 @@ const sketch = ({ context }) => {
     wireframe: true
   });
   const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
+    // color: 0x00ff00,
+    color: random.pick(palette),
     wireframe: false
   });
   
@@ -79,6 +82,7 @@ const sketch = ({ context }) => {
       random.range(-.1, .1) // changes scale in z-axis direction
     );  
     cube.scale.multiplyScalar(0.25); // changes size of object
+    // cube.color.set({color: random.pick(palette)})
     scene.add(cube) 
   };
 
