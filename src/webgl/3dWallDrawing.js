@@ -35,19 +35,29 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup a geometry
-  const geometry = new THREE.BoxGeometry(.010, .010, .010);
+  // const geometry = new THREE.BoxGeometry(.010, .010, .010);
 
   // Setup a material
-  const material = new THREE.MeshBasicMaterial({
-    color: 0x000000,
-    wireframe: false,
-  });
+  // const material = new THREE.MeshBasicMaterial({
+  //   color: 0x000000,
+  //   wireframe: false,
+  // });
+
+  // Setup a mesh with geometry + material
+  // const pointCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
   const pointsCoords = []
 
-  // Setup a mesh with geometry + material
+  // Setup a for loop to create mesh objects at each of 50 random points
   for (let i = 0; i < 50; i++) {
-    const pointCube = new THREE.Mesh(geometry, material);
+    const cubeGeometry = new THREE.BoxGeometry(.010, .010, .010);
+    
+    const cubeMaterial = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      wireframe: false,
+    });
+
+    const pointCube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     pointCube.position.set(
       random.range(-1, 1),
       random.range(-1, 1),
@@ -57,6 +67,7 @@ const sketch = ({ context }) => {
     scene.add(pointCube);
   }
 
+  // Setup a for loop to create straight lines between each of the 50 random points
   for (let i = 0; i < pointsCoords.length; i++) {
     const startPoint = pointsCoords[i];
 
