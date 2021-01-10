@@ -6,6 +6,7 @@ require("three/examples/js/controls/OrbitControls");
 
 const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
+const palettes = require("nice-color-palettes")
 
 const settings = {
   // Make the loop animated
@@ -20,8 +21,11 @@ const sketch = ({ context }) => {
     canvas: context.canvas
   });
 
+  // Color palette
+  const palette = random.pick(palettes)
+
   // WebGL background color
-  renderer.setClearColor("#fff", 1);
+  renderer.setClearColor(palette[4], 1);
 
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
@@ -49,11 +53,11 @@ const sketch = ({ context }) => {
   const pointsCoords = []
 
   // Setup a for loop to create mesh objects at each of 50 random points
-  for (let i = 0; i < 50; i++) {
-    const cubeGeometry = new THREE.BoxGeometry(.010, .010, .010);
+  for (let i = 0; i < 16; i++) {
+    const cubeGeometry = new THREE.SphereGeometry( 1, 3, 2, 6.1, 0, 3.1 );
     
     const cubeMaterial = new THREE.MeshBasicMaterial({
-      color: 0x000000,
+      color: 0x000000, // "white", //palette[random.range(0, 3)],
       wireframe: false,
     });
 
@@ -63,6 +67,7 @@ const sketch = ({ context }) => {
       random.range(-1, 1),
       random.range(-1, 1),
     );
+
     pointsCoords.push(pointCube.position);
     scene.add(pointCube);
   }
@@ -78,7 +83,7 @@ const sketch = ({ context }) => {
       points.push(endPoint);
 
       const lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x000000,
+        color: palette[random.range(0,3)], // 0x000000,
         linewidth: 0.05,
       });
       const lineGeometry = new THREE.BufferGeometry().setFromPoints( points );
@@ -100,6 +105,12 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ time }) {
+      scene.rotation.set( 
+        time * .1, 
+        time * .1,
+        time * .1
+      )
+      // scene.rotation.x =  time;
       controls.update();
       renderer.render(scene, camera);
     },
