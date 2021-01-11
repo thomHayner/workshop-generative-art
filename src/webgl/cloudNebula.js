@@ -26,7 +26,7 @@ const sketch = ({ context }) => {
 
   // Setup a camera
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(0, 0, 500);
+  camera.position.set(0, 0, 450);
   // camera.position.z = 500;
   camera.rotation.x = 1.16;
   camera.rotation.y = -0.12;
@@ -43,12 +43,16 @@ const sketch = ({ context }) => {
   scene.add(ambient);
 
   const directionalLight = new THREE.DirectionalLight(0xff8c19);
-  directionalLight.position.set(0, 0, 1);
+  directionalLight.position.set(0, 0, 10);
   scene.add(directionalLight);
 
-  // let purpleLight = new THREE.PointLight(0x95708F,50,450,1.7);
-  // purpleLight.position.set(200,300,100);
-  // scene.add(purpleLight);
+  let purpleLight = new THREE.PointLight(0x95708F,50,450,1.7);
+  purpleLight.position.set(
+    random.pick(-200, 200),
+    random.pick(-300, 300),
+    100, //random.pick(-100, 100),
+  );
+  scene.add(purpleLight);
   
   // let greenLight = new THREE.PointLight(0xaccabb,50,450,1.7);
   // greenLight.position.set(100,300,100);
@@ -63,11 +67,19 @@ const sketch = ({ context }) => {
   scene.add(orangeLight);
 
   let redLight = new THREE.PointLight(0xd8547e,50,450,1.7);
-  redLight.position.set(100,300,100);
+  redLight.position.set(
+    random.pick(-100, 100),
+    random.pick(-300, 300),
+    100, // random.pick(-100, 100),
+  );
   scene.add(redLight);
   
   let blueLight = new THREE.PointLight(0x3677ac,50,450,1.7);
-  blueLight.position.set(300,300,200);
+  blueLight.position.set(
+    random.pick(-300, 300),
+    random.pick(-300, 300),
+    100,// random.pick(-200, 200),
+  );
   scene.add(blueLight);
 
   // Setup additional lighting effects
@@ -81,7 +93,9 @@ const sketch = ({ context }) => {
   // bloomEffect.blendMode.opacity.value = 1.5;
 
   const cloudParticles = [];
-  const stars = [];
+  // const stars = [];
+
+
 
 //---------------------------------------------------------------------------------------------
 // Method 2: TEXTURE LOADER WITH CALLBACKS
@@ -110,11 +124,12 @@ const sketch = ({ context }) => {
         cloud02.position.set(
           random.range(-500,500),
           random.range(-200,200),
+          0,
         );
         cloud02.rotation.z = random.range(0, 360);
-        // cloud02.scale.set(.01,.01,.01);
+        // cloud02.scale.set(10,10,10);
         cloud02.material.opacity = 0.55;
-        cloud02.material.side = THREE.DoubleSide;
+        // cloud02.material.side = THREE.DoubleSide;
         cloudParticles.push(cloud02)
         scene.add(cloud02);
       }
@@ -137,7 +152,7 @@ const sketch = ({ context }) => {
   const particleLoader = new THREE.TextureLoader();
 
   particleLoader.load(
-    "http://127.0.0.1:5500/assets/textures/particle.png",
+    "http://127.0.0.1:5500/assets/textures/particleStar.png",
     
     function(texture) {
       const particleMaterial = new THREE.PointsMaterial({
@@ -150,7 +165,7 @@ const sketch = ({ context }) => {
         const particle = new THREE.Vector3(
           random.range(-1000,1000),
           random.range(-1000,1000),
-          random.range(-1000,1000)
+          random.range(-1000, -1)
         );
         
         particles.vertices.push(particle);
