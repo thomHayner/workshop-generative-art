@@ -42,44 +42,32 @@ const sketch = ({ context }) => {
   const ambient = new THREE.AmbientLight(0x555555);
   scene.add(ambient);
 
-  const directionalLight = new THREE.DirectionalLight(0xff8c19);
-  directionalLight.position.set(0, 0, 10);
+  const directionalLight = new THREE.DirectionalLight(0xe1f6ff);
+  directionalLight.position.set(0, 0, 1);
   scene.add(directionalLight);
 
-  let purpleLight = new THREE.PointLight(0x95708F,50,450,1.7);
-  purpleLight.position.set(
-    random.pick(-200, 200),
-    random.pick(-300, 300),
-    100, //random.pick(-100, 100),
-  );
+  let purpleLight = new THREE.PointLight(0x0000cc,50,450,1.7);
+  purpleLight.position.set(-200, -300, 200);
   scene.add(purpleLight);
   
-  // let greenLight = new THREE.PointLight(0xaccabb,50,450,1.7);
-  // greenLight.position.set(100,300,100);
+  // let greenLight = new THREE.PointLight(0x66cc00,50,450,1.7);
+  // greenLight.position.set(0,0,300);
   // scene.add(greenLight);
 
   // let blueLight = new THREE.PointLight(0x5468FF,50,450,1.7);
   // blueLight.position.set(300,300,200);
   // scene.add(blueLight);
 
-  let orangeLight = new THREE.PointLight(0xcc6600,50,450,1.7);
-  orangeLight.position.set(200,300,100);
-  scene.add(orangeLight);
+  // let orangeLight = new THREE.PointLight(0xcc6600,50,450,1.7);
+  // orangeLight.position.set(200,300,100);
+  // scene.add(orangeLight);
 
-  let redLight = new THREE.PointLight(0xd8547e,50,450,1.7);
-  redLight.position.set(
-    random.pick(-100, 100),
-    random.pick(-300, 300),
-    100, // random.pick(-100, 100),
-  );
+  let redLight = new THREE.PointLight(0xcc0066,50,450,1.7);
+  redLight.position.set(100, 300, 100);
   scene.add(redLight);
   
-  let blueLight = new THREE.PointLight(0x3677ac,50,450,1.7);
-  blueLight.position.set(
-    random.pick(-300, 300),
-    random.pick(-300, 300),
-    100,// random.pick(-200, 200),
-  );
+  let blueLight = new THREE.PointLight(0x0066CC,50,450,1.7);
+  blueLight.position.set(-300, 300, 100,);
   scene.add(blueLight);
 
   // Setup additional lighting effects
