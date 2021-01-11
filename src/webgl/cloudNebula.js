@@ -84,6 +84,120 @@ const sketch = ({ context }) => {
   const stars = [];
 
 //---------------------------------------------------------------------------------------------
+// Method 2: TEXTURE LOADER WITH CALLBACKS
+  
+  const cloud02Loader = new THREE.TextureLoader();
+  
+  // Load a resource
+  cloud02Loader.load(
+    // Resource path
+    "http://127.0.0.1:5500/assets/textures/cloud-02.png",
+
+    // onLoad callback function
+    function(texture) {
+      // Create the geometry
+      const cloud02Geometry = new THREE.PlaneBufferGeometry(500,500);
+  
+      // Create the material
+      const cloud02Material = new THREE.MeshLambertMaterial({
+        map : texture,
+        transparent : true,
+      });
+
+      // Load clouds
+      for (let i = 0; i < 50; i++) {
+        let cloud02 = new THREE.Mesh(cloud02Geometry, cloud02Material);
+        cloud02.position.set(
+          random.range(-500,500),
+          random.range(-200,200),
+        );
+        cloud02.rotation.z = random.range(0, 360);
+        // cloud02.scale.set(.01,.01,.01);
+        cloud02.material.opacity = 0.55;
+        cloud02.material.side = THREE.DoubleSide;
+        cloudParticles.push(cloud02)
+        scene.add(cloud02);
+      }
+    },
+    
+    // onProgress callback currently not supported // I don't know what this is, it was in the docs
+    undefined,
+    
+    // onError callback
+    function(e) {
+      console.log("ERROR LOADING CLOUD TEXTURE!!")
+    }
+  );
+
+//---------------------------------------------------------------------------------------------
+// ADD BACKGROUND STARS USING PARTICLES METHOD
+
+  const particleCount = 1800;
+  const particles = new THREE.Geometry();
+  const particleLoader = new THREE.TextureLoader();
+
+  particleLoader.load(
+    "http://127.0.0.1:5500/assets/textures/particle.png",
+    
+    function(texture) {
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0xa5e5ff, // 0x73d7ff 0x91e0ff 0xa5e5ff  "https://www.pinterest.com/pin/210121138851770530/"
+        map: texture,
+        size: random.range(5, 25), 
+      });
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = new THREE.Vector3(
+          random.range(-1000,1000),
+          random.range(-1000,1000),
+          random.range(-1000,1000)
+        );
+        
+        particles.vertices.push(particle);
+      }
+
+      const particleSystem = new THREE.Points(particles, particleMaterial);
+      scene.add(particleSystem);
+    },
+
+    undefined,
+
+    function(e) {
+      console.log("ERROR LOADING PARTICLES TEXTURE!!")
+    }
+  )
+
+//---------------------------------------------------------------------------------------------
+// RENDER
+
+  // draw each frame
+  return {
+    // Handle resize events here
+    resize({ pixelRatio, viewportWidth, viewportHeight }) {
+      renderer.setPixelRatio(pixelRatio);
+      renderer.setSize(viewportWidth, viewportHeight, false);
+      camera.aspect = viewportWidth / viewportHeight;
+      camera.updateProjectionMatrix();
+    },
+    // Update & render your scene here
+    render({ time }) {
+      // controls.update();
+      renderer.render(scene, camera);
+      cloudParticles.forEach(p => {
+        // p.rotation.z -=0.001;
+      });
+    },
+    // Dispose of events & renderer for cleaner hot-reloading
+    unload() {
+      // controls.dispose();
+      renderer.dispose();
+    }
+  };
+};
+
+canvasSketch(sketch, settings);
+
+//---------------------------------------------------------------------------------------------
 // Method 1: TEXTURE LOADER - Works just fine
 
   // const texture = new THREE.TextureLoader().load(
@@ -110,52 +224,6 @@ const sketch = ({ context }) => {
   //   scene.add(cloud01);
   // };
  
-//---------------------------------------------------------------------------------------------
-// Method 2: TEXTURE LOADER WITH CALLBACKS
-  
-  // const cloud02Loader = new THREE.TextureLoader();
-  
-  // // Load a resource
-  // cloud02Loader.load(
-  //   // Resource path
-  //   "http://127.0.0.1:5500/assets/textures/cloud-02.png",
-
-  //   // onLoad callback function
-  //   function(texture) {
-  //     // Create the geometry
-  //     const cloud02Geometry = new THREE.PlaneBufferGeometry(500,500);
-  
-  //     // Create the material
-  //     const cloud02Material = new THREE.MeshLambertMaterial({
-  //       map : texture,
-  //       transparent : true,
-  //     });
-
-  //     // Load clouds
-  //     for (let i = 0; i < 50; i++) {
-  //       let cloud02 = new THREE.Mesh(cloud02Geometry, cloud02Material);
-  //       cloud02.position.set(
-  //         random.range(-500,500),
-  //         random.range(-200,200),
-  //       );
-  //       cloud02.rotation.z = random.range(0, 360);
-  //       // cloud02.scale.set(.01,.01,.01);
-  //       cloud02.material.opacity = 0.55;
-  //       cloud02.material.side = THREE.DoubleSide;
-  //       cloudParticles.push(cloud02)
-  //       scene.add(cloud02);
-  //     }
-  //   },
-    
-  //   // onProgress callback currently not supported // I don't know what this is, it was in the docs
-  //   undefined,
-    
-  //   // onError callback
-  //   function(e) {
-  //     console.log("ERROR LOADING CLOUD TEXTURE!!")
-  //   }
-  // );
-
 //---------------------------------------------------------------------------------------------
 // ADD STARS FOR BACKGROUND USING METHOD 1
 
@@ -230,92 +298,3 @@ const sketch = ({ context }) => {
   //     console.log("ERROR LOADING STAR TEXTURE!!")
   //   }
   // );
-
-//---------------------------------------------------------------------------------------------
-// ADD STARS USING PARTICLES METHOD
-
-  const particleCount = 1800;
-  const particles = new THREE.Geometry();
-  const particleLoader = new THREE.TextureLoader();
-
-  particleLoader.load(
-    "http://127.0.0.1:5500/assets/textures/particle.png",
-    
-    function(texture) {
-      const particleMaterial = new THREE.PointsMaterial({
-        color: 0xa5e5ff, // 0x73d7ff 0x91e0ff 0xa5e5ff  "https://www.pinterest.com/pin/210121138851770530/"
-        map: texture,
-        size: random.range(5, 25), 
-      });
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = new THREE.Vector3(
-          random.range(-1000,1000),
-          random.range(-1000,1000),
-          random.range(-1000,1000)
-        );
-        
-        particles.vertices.push(particle);
-      }
-
-      const particleSystem = new THREE.Points(particles, particleMaterial);
-      scene.add(particleSystem);
-    },
-
-    undefined,
-
-    function(e) {
-      console.log("ERROR LOADING PARTICLES TEXTURE!!")
-    }
-  )
-
-// const particles = new THREE.Geometry();
-// const particleMaterial = new THREE.PointsMaterial({
-//   color:0xffffff,
-//   size: 10,
-//   // map: 
-// });
-
-// for (let i = 0; i < particleCount; i++) {
-//   const particle = new THREE.Vector3(
-//     random.range(-1000,1000),
-//     random.range(-700,700),
-//     random.range(-1000,500),
-//   );
-
-//   particles.vertices.push(particle);
-// }
-
-// const particleSystem = new THREE.Points(particles, particleMaterial);
-// scene.add(particleSystem);
-
-
-//---------------------------------------------------------------------------------------------
-// RENDER
-
-  // draw each frame
-  return {
-    // Handle resize events here
-    resize({ pixelRatio, viewportWidth, viewportHeight }) {
-      renderer.setPixelRatio(pixelRatio);
-      renderer.setSize(viewportWidth, viewportHeight, false);
-      camera.aspect = viewportWidth / viewportHeight;
-      camera.updateProjectionMatrix();
-    },
-    // Update & render your scene here
-    render({ time }) {
-      // controls.update();
-      renderer.render(scene, camera);
-      cloudParticles.forEach(p => {
-        // p.rotation.z -=0.001;
-      });
-    },
-    // Dispose of events & renderer for cleaner hot-reloading
-    unload() {
-      // controls.dispose();
-      renderer.dispose();
-    }
-  };
-};
-
-canvasSketch(sketch, settings);
