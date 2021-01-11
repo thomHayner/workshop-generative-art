@@ -39,10 +39,10 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup lights
-  const ambient = new THREE.AmbientLight(0x555555);
+  const ambient = new THREE.AmbientLight(0x000000);
   scene.add(ambient);
 
-  const directionalLight = new THREE.DirectionalLight(0xe1f6ff);
+  const directionalLight = new THREE.DirectionalLight(0xcc6600);
   directionalLight.position.set(0, 0, 1);
   scene.add(directionalLight);
 
@@ -50,6 +50,10 @@ const sketch = ({ context }) => {
   purpleLight.position.set(-200, -300, 200);
   scene.add(purpleLight);
   
+  let redLight = new THREE.PointLight(0xcc0000,50,450,1.7);
+  redLight.position.set(100, 300, 100);
+  scene.add(redLight);
+
   // let greenLight = new THREE.PointLight(0x66cc00,50,450,1.7);
   // greenLight.position.set(0,0,300);
   // scene.add(greenLight);
@@ -61,14 +65,10 @@ const sketch = ({ context }) => {
   // let orangeLight = new THREE.PointLight(0xcc6600,50,450,1.7);
   // orangeLight.position.set(200,300,100);
   // scene.add(orangeLight);
-
-  let redLight = new THREE.PointLight(0xcc0066,50,450,1.7);
-  redLight.position.set(100, 300, 100);
-  scene.add(redLight);
   
-  let blueLight = new THREE.PointLight(0x0066CC,50,450,1.7);
-  blueLight.position.set(-300, 300, 100,);
-  scene.add(blueLight);
+  // let blueLight = new THREE.PointLight(0x0066CC,50,450,1.7);
+  // blueLight.position.set(-300, 300, 100,);
+  // scene.add(blueLight);
 
   // Setup additional lighting effects
   // const bloomEffect = new POSTPROCESSING.BloomEffect({
