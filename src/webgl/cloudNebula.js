@@ -210,7 +210,7 @@ const sketch = ({ context }) => {
       // controls.update();
       renderer.render(scene, camera);
       cloudParticles.forEach(p => {
-        // p.rotation.z -=0.001;
+        // p.rotation.z = time * 0.008;
       });
     },
     // Dispose of events & renderer for cleaner hot-reloading
