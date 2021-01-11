@@ -113,10 +113,10 @@ const sketch = ({ context }) => {
 //---------------------------------------------------------------------------------------------
 // Method 2: TEXTURE LOADER WITH CALLBACKS
   
-  // const cloudLoader = new THREE.TextureLoader();
+  // const cloud02Loader = new THREE.TextureLoader();
   
   // // Load a resource
-  // cloudLoader.load(
+  // cloud02Loader.load(
   //   // Resource path
   //   "http://127.0.0.1:5500/assets/textures/cloud-02.png",
 
@@ -139,7 +139,7 @@ const sketch = ({ context }) => {
   //         random.range(-200,200),
   //       );
   //       cloud02.rotation.z = random.range(0, 360);
-  //       // cloud.scale.set(.01,.01,.01);
+  //       // cloud02.scale.set(.01,.01,.01);
   //       cloud02.material.opacity = 0.55;
   //       cloud02.material.side = THREE.DoubleSide;
   //       cloudParticles.push(cloud02)
@@ -234,40 +234,40 @@ const sketch = ({ context }) => {
 //---------------------------------------------------------------------------------------------
 // ADD STARS USING PARTICLES METHOD
 
-const particleCount = 500;
-const particles = new THREE.Geometry();
-const particleLoader = new THREE.TextureLoader();
+  const particleCount = 1800;
+  const particles = new THREE.Geometry();
+  const particleLoader = new THREE.TextureLoader();
 
-particleLoader.load(
-  "http://127.0.0.1:5500/assets/textures/particle.png",
-  
-  function(texture) {
-    const particleMaterial = new THREE.PointsMaterial({
-      color:0xffffff,
-      map: texture,
-      size: 10, 
-    });
+  particleLoader.load(
+    "http://127.0.0.1:5500/assets/textures/particle.png",
+    
+    function(texture) {
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0xa5e5ff, // 0x73d7ff 0x91e0ff 0xa5e5ff  "https://www.pinterest.com/pin/210121138851770530/"
+        map: texture,
+        size: random.range(5, 25), 
+      });
 
-    for (let i = 0; i < particleCount; i++) {
-      const particle = new THREE.Vector3(
-        random.range(-1000,1000),
-        random.range(-700,700),
-        random.range(-1000,500)
-      );
-      
-      particles.vertices.push(particle);
+      for (let i = 0; i < particleCount; i++) {
+        const particle = new THREE.Vector3(
+          random.range(-1000,1000),
+          random.range(-1000,1000),
+          random.range(-1000,1000)
+        );
+        
+        particles.vertices.push(particle);
+      }
+
+      const particleSystem = new THREE.Points(particles, particleMaterial);
+      scene.add(particleSystem);
+    },
+
+    undefined,
+
+    function(e) {
+      console.log("ERROR LOADING PARTICLES TEXTURE!!")
     }
-
-    const particleSystem = new THREE.Points(particles, particleMaterial);
-    scene.add(particleSystem);
-  },
-
-  undefined,
-
-  function(e) {
-    console.log("ERROR LOADING PARTICLES TEXTURE!!")
-  }
-)
+  )
 
 // const particles = new THREE.Geometry();
 // const particleMaterial = new THREE.PointsMaterial({
