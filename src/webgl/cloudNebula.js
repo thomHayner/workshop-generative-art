@@ -39,8 +39,8 @@ const sketch = ({ context }) => {
   const scene = new THREE.Scene();
 
   // Setup lights
-  //---------------------------------------------------------------------------------------------
-  // Color Scheme 1
+//---------------------------------------------------------------------------------------------
+// Color Scheme 1
 
   // const ambient = new THREE.AmbientLight(0x000000);
   // scene.add(ambient);
@@ -57,8 +57,8 @@ const sketch = ({ context }) => {
   // redLight.position.set(100, 300, 100);
   // scene.add(redLight);
 
-  //---------------------------------------------------------------------------------------------
-  // Color Scheme 2
+//---------------------------------------------------------------------------------------------
+// Color Scheme 2
 
   const ambient = new THREE.AmbientLight(0x555555);
   scene.add(ambient);
@@ -75,8 +75,15 @@ const sketch = ({ context }) => {
   blueLight.position.set(300,300,200);
   scene.add(blueLight);
 
-  //---------------------------------------------------------------------------------------------
-  // Color Scheme 3
+//---------------------------------------------------------------------------------------------
+// Color Scheme 3
+
+  // const ambient = new THREE.AmbientLight(0x555555);
+  // scene.add(ambient);
+
+  // const directionalLight = new THREE.DirectionalLight(0x66cc00);
+  // directionalLight.position.set(0, 0, 1);
+  // scene.add(directionalLight);
 
   // let orangeLight = new THREE.PointLight(0xcc6600,50,450,1.7);
   // orangeLight.position.set(200,300,100);
@@ -151,7 +158,7 @@ const sketch = ({ context }) => {
 //---------------------------------------------------------------------------------------------
 // ADD BACKGROUND STARS USING PARTICLES METHOD
 
-  const particleCount = 1800;
+  const particleCount = 1200;
   const particles = new THREE.Geometry();
   const particleLoader = new THREE.TextureLoader();
 
