@@ -134,7 +134,7 @@ const sketch = ({ context }) => {
         let cloud02 = new THREE.Mesh(cloud02Geometry, cloud02Material);
         cloud02.position.set(
           random.range(-500,500),
-          random.range(-200,200),
+          random.range(-400,400),
           0,
         );
         cloud02.rotation.z = random.range(0, 360);
@@ -209,6 +209,8 @@ const sketch = ({ context }) => {
     render({ time }) {
       // controls.update();
       renderer.render(scene, camera);
+      // scene.rotation.z = time * 0.01;
+      // scene.rotation.x = time * 1
       cloudParticles.forEach(p => {
         // p.rotation.z = time * 0.008;
       });
